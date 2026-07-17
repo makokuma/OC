@@ -1,6 +1,7 @@
 import streamlit as st
 import subprocess
 from pathlib import Path
+import uuid
 
 st.title("昔の天気を見てみよう")
 
@@ -10,11 +11,14 @@ if st.button("描画する"):
     # 前回の画像が残っていると紛らわしいので消す
     if png_path.exists():
         png_path.unlink()
+    #assign job id
+    job_id = uuid.uuid4().hex
+    png_path = Path(f"enshu1_rainarea_{job_id}.png")
 
     command = [
         "grads",
         "-blc",
-        "run enshu_1.gs"
+        "run enshu_1.gs {png_path}"
     ]
 
     with st.spinner("描画中..."):
@@ -25,7 +29,7 @@ if st.button("描画する"):
             timeout=60
         )
 
-    if result.returncode == 0 and png_path.exists():
+    if png_path.exists(): #do not use result.returncode == 0
         st.success("描画できました")
         st.image(str(png_path))
     else:
