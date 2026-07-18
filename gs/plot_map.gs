@@ -4,13 +4,15 @@ function main(args)
 *get args
 ctlpath = subwrd(args, 1)
 gtime   = subwrd(args, 2)
-varname = subwrd(args, 3)
-gxout   = subwrd(args, 4)
-lat1    = subwrd(args, 5)
-lat2    = subwrd(args, 6)
-lon1    = subwrd(args, 7)
-lon2    = subwrd(args, 8)
-outpng  = subwrd(args, 9)
+plotkey   = subwrd(args, 3)
+varname = subwrd(args, 4)
+gxout   = subwrd(args, 5)
+lat1    = subwrd(args, 6)
+lat2    = subwrd(args, 7)
+lon1    = subwrd(args, 8)
+lon2    = subwrd(args, 9)
+colorgs    = subwrd(args, 10)
+outpng  = subwrd(args, 11)
 
 'reinit'
 'c'
@@ -22,7 +24,20 @@ outpng  = subwrd(args, 9)
 'set lat 'lat1' 'lat2
 'set lon 'lon1' 'lon2
 'set gxout 'gxout
-'d 'varname
+
+*unit conversion (K->C, Pa->hPa)
+if (plotkey = 'temp')
+  'define pvar = 'varname'-273.15'
+else
+if (plotkey = 'prs')
+  'define pvar = 'varname'/100'
+else
+  'define pvar = 'varname
+endif
+endif
+
+'run 'colorgs' 'plotkey
+'d pvar'
 'cbarn'
-'printim 'outpng' png white'
+'printim 'outpng' png white -x 1600 -y 1200'
 'quit'
