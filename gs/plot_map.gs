@@ -18,6 +18,12 @@ outpng  = subwrd(args, 11)
 'c'
 'set grads off'
 'set mpdset hires'
+'set map 1 1 6'
+'set grid off'
+'set xlopts 1 3 0.14'
+'set ylopts 1 3 0.14'
+
+'set parea 0.8 10.2 0.8 7.6'
 
 'open 'ctlpath
 'set time 'gtime
