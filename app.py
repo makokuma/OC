@@ -6,9 +6,9 @@ import uuid
 from datetime import date
 
 
-from time_util import grads_time
+from time_util import grads_time, grads_time_from_jst
 from path_util import get_ctl_path
-from config import PLOT_CONFIG, EVENT_CONFIG
+from config import PLOT_CONFIG, EVENT_CONFIG, REGION_CONFIG
 from grads_runner import run_grads
 
 APP_DIR = Path(__file__).resolve().parent
@@ -37,12 +37,23 @@ event_labels = {
     for key, event in EVENT_CONFIG.items()
 }
 
+region_labels = {
+    region["label"]: key
+    for key, region in REGION_CONFIG.items()
+}
+
 
 #plot_map.gs の引数順: ctlpath, gtime, varname, gxout, lat1, lat2, lon1, lon2, outpng
 def draw(selected_date, hour, plot_key, plot_label, lat_range, lon_range, key_prefix):
     plot_config = PLOT_CONFIG[plot_key]
 
-    gtime = grads_time(selected_date.year, selected_date.month, selected_date.day, hour)
+    gtime = grads_time_from_jst(
+        selected_date.year,
+        selected_date.month,
+        selected_date.day,
+        hour,
+    )
+    #gtime = grads_time(selected_date.year, selected_date.month, selected_date.day, hour)
     ctl_path = get_ctl_path(selected_date.year, selected_date.month, plot_config["ctrl_grp"])
 
     job_id = uuid.uuid4().hex
@@ -96,9 +107,10 @@ def draw(selected_date, hour, plot_key, plot_label, lat_range, lon_range, key_pr
             st.write("stderr")
             st.code(result.stderr or "(stderrなし)")
 
-
+#another tub 1
 tab_free, tab_event = st.tabs(["自由に選ぶ", "おすすめの日"])
 
+#default tub select
 with tab_free:
     st.write("任意の日付、要素を選択してください")
 
@@ -109,7 +121,7 @@ with tab_free:
     )
 
     hour = st.selectbox(
-        "時刻",
+        "時刻(JST)",
         ["0", "3", "6", "9", "12", "15", "18", "21"],
         index=3,
         key="free_hour",
@@ -124,12 +136,20 @@ with tab_free:
     plot_key = plot_labels[plot_label]
     plot_config = PLOT_CONFIG[plot_key]
 
+    region_label = st.selectbox(
+        "表示領域",
+        list(region_labels.keys()),
+        key="free_region",
+    )
+    region_config = REGION_CONFIG[region_labels[region_label]]
+
     draw(
         selected_date, hour, plot_key, plot_label,
-        plot_config["lat_range"], plot_config["lon_range"],
+        region_config["lat_range"], region_config["lon_range"],
         key_prefix="free",
     )
 
+#another tub 1
 with tab_event:
     st.write("おすすめの事例から選んでください")
 

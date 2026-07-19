@@ -35,10 +35,16 @@ outpng  = subwrd(args, 11)
 if (plotkey = 'temp')
   'define pvar = 'varname'-273.15'
 else
+
 if (plotkey = 'prs')
   'define pvar = 'varname'/100'
 else
+*accum rein
+if (plotkey = 'rain_accum_24h')
+  'define pvar = sum('varname',t-23,t-0)'
+else
   'define pvar = 'varname
+endif
 endif
 endif
 
