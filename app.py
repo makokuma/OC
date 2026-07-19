@@ -8,7 +8,7 @@ from datetime import date
 
 from time_util import grads_time, grads_time_from_jst
 from path_util import get_ctl_path
-from config import PLOT_CONFIG, EVENT_CONFIG, REGION_CONFIG
+from config import PLOT_CONFIG, EVENT_CONFIG, REGION_CONFIG, OVERLAY_CONFIG
 from grads_runner import run_grads
 
 APP_DIR = Path(__file__).resolve().parent
@@ -42,9 +42,18 @@ region_labels = {
     for key, region in REGION_CONFIG.items()
 }
 
+overlay_labels = {
+    overlay["label"]: key
+    for key, overlay in OVERLAY_CONFIG.items()
+}
+
+
+def default_overlay_labels(overlay_keys):
+    return [OVERLAY_CONFIG[key]["label"] for key in overlay_keys if key in OVERLAY_CONFIG]
+
 
 #plot_map.gs の引数順: ctlpath, gtime, varname, gxout, lat1, lat2, lon1, lon2, outpng
-def draw(selected_date, hour, plot_key, plot_label, lat_range, lon_range, key_prefix):
+def draw(selected_date, hour, plot_key, plot_label, lat_range, lon_range, overlays, key_prefix):
     plot_config = PLOT_CONFIG[plot_key]
 
     gtime = grads_time_from_jst(
@@ -59,6 +68,7 @@ def draw(selected_date, hour, plot_key, plot_label, lat_range, lon_range, key_pr
     job_id = uuid.uuid4().hex
     png_path = OUTPUT_DIR / f"{plot_key}_{selected_date:%Y%m%d}_{hour}_{job_id}.png"
 
+    #plot buttan
     with st.expander("現在の設定", expanded=False):
         st.write("plot_key:", plot_key)
         st.write("grads_time:", gtime)
@@ -78,6 +88,7 @@ def draw(selected_date, hour, plot_key, plot_label, lat_range, lon_range, key_pr
             lon_range[1],
             COLORS_GS,
             png_path,
+            *overlays,
         ]
 
         with st.spinner("描画中..."):
@@ -117,6 +128,8 @@ with tab_free:
     selected_date = st.date_input(
         "日付",
         value=date(2020, 7, 4),
+        min_value=date(2001, 1, 1),
+        max_value=date(2022, 12, 31),
         key="free_date",
     )
 
@@ -143,9 +156,19 @@ with tab_free:
     )
     region_config = REGION_CONFIG[region_labels[region_label]]
 
+    selected_overlay_labels = st.multiselect(
+        "重ね書き",
+        list(overlay_labels.keys()),
+        default=default_overlay_labels(plot_config.get("overlays", [])),
+        key="free_overlay",
+    )
+    overlays = [overlay_labels[label] for label in selected_overlay_labels]
+
+    #do not add tub below
     draw(
         selected_date, hour, plot_key, plot_label,
         region_config["lat_range"], region_config["lon_range"],
+        overlays,
         key_prefix="free",
     )
 
@@ -163,8 +186,18 @@ with tab_event:
 
     event_date = date(*event["date"])
 
+    selected_event_overlay_labels = st.multiselect(
+        "重ね書き",
+        list(overlay_labels.keys()),
+        default=default_overlay_labels(PLOT_CONFIG[event["plot_key"]].get("overlays", [])),
+        key="event_overlay",
+    )
+    event_overlays = [overlay_labels[label] for label in selected_event_overlay_labels]
+
+    #do not add tub below
     draw(
         event_date, event["hour"], event["plot_key"], PLOT_CONFIG[event["plot_key"]]["label"],
         event["lat_range"], event["lon_range"],
+        event_overlays,
         key_prefix="event",
     )

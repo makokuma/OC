@@ -9,6 +9,7 @@ PLOT_CONFIG = {
         "gxout": "shaded",
         "lat_range": (20, 50),
         "lon_range": (120, 150),
+        "overlays": ["wind_vector"],
     },
 
     #accumulate rain
@@ -50,18 +51,27 @@ PLOT_CONFIG = {
         "gxout": "shaded",
         "lat_range": (20, 50),
         "lon_range": (120, 150),
+        "overlays": ["slp_contour"],
     },
 
-    #wind
+}
 
-    #pressure
-    "prs": {
+#overlay var
+OVERLAY_CONFIG = {
+    "slp_contour": {
         "label": "海面更正気圧",
-        "ctrl_grp": "fcst_sfc", #fcst_sfc anl_sfc, fcst_p, anl_p
-        "grads_var": "PRMSLmsl",
-        "gxout": "shaded",
-        "lat_range": (20, 50),
-        "lon_range": (120, 150),
+        "grads_expr": "PRMSLmsl/100",
+        "gxout": "contour",
+        "clevs": "980 984 988 992 996 1000 1004 1008 1012 1016 1020 1024",
+        "ccolor": 1,
+        "cthick": 5,
+    },
+    "wind_vector": {
+        "label": "地上風",
+        "grads_expr": "skip(UGRD10m,5,5);VGRD10m",
+        "gxout": "vector",
+        "arrscl": "0.5 10",
+        "ccolor": 1,
     },
 }
 

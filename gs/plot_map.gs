@@ -48,8 +48,21 @@ endif
 endif
 endif
 
+*main var(shaded)
 'run 'colorgs' 'plotkey
 'd pvar'
 'cbarn'
+
+*overlay var (position 12 onward, until an empty token)
+i = 12
+while (1)
+  ov = subwrd(args, i)
+  if (ov = '')
+    break
+  endif
+  'run gs/overlay.gs 'ov
+  i = i + 1
+endwhile
+
 'printim 'outpng' png white -x 1600 -y 1200'
 'quit'
