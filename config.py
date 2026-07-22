@@ -103,6 +103,33 @@ EVENT_CONFIG = {
         "lon_range": (130, 145),
         "description": "2018年に埼玉県で猛暑日となった事例です。",
     },
+    "typhoon_day": {
+        "label": "令和元年台風19号",
+        "date": (2019, 10, 12),
+        "hour": 21,
+        "plot_key": "rain",
+        "lat_range": (30, 40),
+        "lon_range": (135, 145),
+        "description": "2019年に関東から東北にかけて被害をもたらした台風です。",
+    },
+    "snow_day": {
+        "label": "2021年大雪事例",
+        "date": (2021, 1, 8),
+        "hour": 9,
+        "plot_key": "rain",
+        "lat_range": (35, 40),
+        "lon_range": (135, 145),
+        "description": "2021年に北陸で大雪をもたらした事例です。",
+    },
+    "cold_day": {
+        "label": "2018年寒波事例",
+        "date": (2021, 1, 26),
+        "hour": 6,
+        "plot_key": "temp",
+        "lat_range": (35, 40),
+        "lon_range": (135, 145),
+        "description": "2018年に上空に寒気が流れ込んだ事例です。",
+    },
 }
 
 #region tub

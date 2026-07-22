@@ -186,6 +186,20 @@ with tab_event:
 
     event_date = date(*event["date"])
 
+    EVENT_DEFAULT_REGION = "イベントの既定範囲"
+    event_region_label = st.selectbox(
+        "表示領域",
+        [EVENT_DEFAULT_REGION] + list(region_labels.keys()),
+        key="event_region",
+    )
+    if event_region_label == EVENT_DEFAULT_REGION:
+        event_lat_range = event["lat_range"]
+        event_lon_range = event["lon_range"]
+    else:
+        event_region_config = REGION_CONFIG[region_labels[event_region_label]]
+        event_lat_range = event_region_config["lat_range"]
+        event_lon_range = event_region_config["lon_range"]
+
     selected_event_overlay_labels = st.multiselect(
         "重ね書き",
         list(overlay_labels.keys()),
@@ -197,7 +211,7 @@ with tab_event:
     #do not add tub below
     draw(
         event_date, event["hour"], event["plot_key"], PLOT_CONFIG[event["plot_key"]]["label"],
-        event["lat_range"], event["lon_range"],
+        event_lat_range, event_lon_range,
         event_overlays,
         key_prefix="event",
     )
