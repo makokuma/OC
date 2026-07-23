@@ -30,7 +30,7 @@ PLOT_CONFIG = {
         "gxout": "shaded",
         "lat_range": (20, 50),
         "lon_range": (120, 150),
-        "accum_hours": 24,
+        "accum_hours": 6,
     },
 
     "rain_accum_3h": {
@@ -40,7 +40,7 @@ PLOT_CONFIG = {
         "gxout": "shaded",
         "lat_range": (20, 50),
         "lon_range": (120, 150),
-        "accum_hours": 24,
+        "accum_hours": 3,
     },
 
     #temperature
@@ -123,7 +123,7 @@ EVENT_CONFIG = {
     },
     "cold_day": {
         "label": "2018年寒波事例",
-        "date": (2021, 1, 26),
+        "date": (2018, 1, 26),
         "hour": 6,
         "plot_key": "temp",
         "lat_range": (35, 40),
