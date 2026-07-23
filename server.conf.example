@@ -1,0 +1,25 @@
+# Server-side configuration for oc.sh
+#
+# Copy this file on the remote server to:
+#   ~/.config/oc/server.conf
+#
+# Then edit the values for your environment.
+
+
+# Directory containing app.py
+OC_APP_DIR="/path/to/OC"
+
+# bin directory of the Python virtual environment
+OC_VENV_BIN="/path/to/python-venv/bin"
+
+# Streamlit log file
+# Use ${HOME}, not a quoted "~".
+OC_LOG_FILE="${HOME}/streamlit-oc.log"
+
+# Root directory containing the data
+OC_DATA_ROOT="/path/to/data"
+
+export OC_APP_DIR
+export OC_VENV_BIN
+export OC_LOG_FILE
+export OC_DATA_ROOT

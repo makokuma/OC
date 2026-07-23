@@ -1,0 +1,28 @@
+# Client-side configuration for oc.sh
+#
+# Copy this file to:
+#   ~/.config/oc/client.conf
+#
+# Then edit the values for your environment.
+
+
+# SSH host alias defined in ~/.ssh/config
+OC_HOST="your-ssh-host"
+
+# Local port used to access Streamlit
+OC_PORT="8888"
+
+# SSH keep-alive settings
+OC_SERVER_ALIVE_INTERVAL="60"
+OC_SERVER_ALIVE_COUNT_MAX="3"
+
+# SSH ControlMaster socket
+OC_CONTROL_DIR="${HOME}/.cache/oc"
+OC_CONTROL_SOCKET="${OC_CONTROL_DIR}/ssh-control-${OC_PORT}"
+
+export OC_HOST
+export OC_PORT
+export OC_SERVER_ALIVE_INTERVAL
+export OC_SERVER_ALIVE_COUNT_MAX
+export OC_CONTROL_DIR
+export OC_CONTROL_SOCKET
