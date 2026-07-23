@@ -271,6 +271,8 @@ oc_status() {
   _oc_load_client_config || return 1
   _oc_validate_client_config || return 1
 
+  local url="http://localhost:${OC_PORT}"
+
   if _oc_master_running; then
     echo "OC tunnel is running."
     echo "URL: $url"
