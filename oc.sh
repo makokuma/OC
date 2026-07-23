@@ -273,7 +273,7 @@ oc_status() {
 
   if _oc_master_running; then
     echo "OC tunnel is running."
-    echo "URL: $OC_URL"
+    echo "URL: $url"
 
     if curl -fsS \
       "http://127.0.0.1:${OC_PORT}/_stcore/health" \
