@@ -1,5 +1,16 @@
 # ~/.config/oc/oc.sh
 
+_oc_load_client_config() {
+  if [ ! -f "$_OC_CLIENT_CONFIG" ]; then
+    echo "OC client configuration was not found:" >&2
+    echo "  $_OC_CLIENT_CONFIG" >&2
+    return 1
+  fi
+
+  # shellcheck source=/dev/null
+  source "$_OC_CLIENT_CONFIG"
+}
+
 _OC_CLIENT_CONFIG="${OC_CLIENT_CONFIG:-$HOME/.config/oc/client.conf}"
 
 
