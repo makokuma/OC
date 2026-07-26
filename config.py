@@ -159,6 +159,11 @@ REGION_CONFIG = {
         "lat_range": (33, 37),
         "lon_range": (134, 137),
     },
+    "chyuugoku": {
+        "label": "中国地方",
+        "lat_range": (33.5, 35.5),
+        "lon_range": (130, 135.5),
+    },
     "shikoku": {
         "label": "四国",
         "lat_range": (32, 34.5),
@@ -171,7 +176,7 @@ REGION_CONFIG = {
     },
     "toukai": {
         "label": "東海",
-        "lat_range": (32, 35.5),
+        "lat_range": (34, 36),
         "lon_range": (136.5, 139.5),
     },
     "tohoku": {
