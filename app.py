@@ -20,6 +20,14 @@ COLORS_GS = GS_DIR / "color_bar.gs"
 
 OUTPUT_DIR.mkdir(exist_ok=True)
 
+MAX_OUTPUT_FILES = 50
+
+
+def cleanup_output_dir(directory, keep=MAX_OUTPUT_FILES):
+    files = sorted(directory.glob("*.png"), key=lambda p: p.stat().st_mtime, reverse=True)
+    for old_file in files[keep:]:
+        old_file.unlink()
+
 st.set_page_config(
     page_title="RRJ-Conv描画ツール",
     layout="wide",
@@ -99,6 +107,8 @@ def draw(selected_date, hour, plot_key, plot_label, lat_range, lon_range, overla
             )
 
         png_ok = png_path.exists() and png_path.stat().st_size > 0
+
+        cleanup_output_dir(OUTPUT_DIR)
 
         if png_ok:
             st.success("描画できました")
