@@ -161,7 +161,7 @@ REGION_CONFIG = {
     },
     "chyuugoku": {
         "label": "中国地方",
-        "lat_range": (33.5, 35.5),
+        "lat_range": (33.5, 36),
         "lon_range": (130, 135.5),
     },
     "shikoku": {
