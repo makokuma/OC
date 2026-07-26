@@ -144,6 +144,11 @@ REGION_CONFIG = {
         "lat_range": (30, 35),
         "lon_range": (128, 133),
     },
+    "okinawa": {
+        "label": "沖縄",
+        "lat_range": (25, 30),
+        "lon_range": (125, 130),
+    },
     "kanto": {
         "label": "関東",
         "lat_range": (34, 37),
@@ -163,6 +168,11 @@ REGION_CONFIG = {
         "label": "北陸",
         "lat_range": (35, 39),
         "lon_range": (135, 141),
+    },
+    "toukai": {
+        "label": "東海",
+        "lat_range": (32, 35.5),
+        "lon_range": (136.5, 139.5),
     },
     "tohoku": {
         "label": "東北",
