@@ -71,7 +71,7 @@ endif
 
 if (plotkey = 'temp')
   'set gxout shaded'
-  'set clevs -10 -5 0 5 10 15 20 25 30 35 '
+  'set clevs -10 -5 0 5 10 15 20 25 30 35 40'
 
 *color of JMA
   'set rgb 31 0 0 112'
@@ -85,8 +85,9 @@ if (plotkey = 'temp')
   'set rgb 39 255 153 0'
   'set rgb 40 255 40 0'
   'set rgb 41 180 0 104'
+  'set rgb 42 145 0 83'
 
-  'set ccols 31 32 33 34 35 36 37 38 39 40 41 '
+  'set ccols 31 32 33 34 35 36 37 38 39 40 41 42 '
   return
 endif
 
