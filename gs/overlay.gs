@@ -45,7 +45,6 @@ if (overlay = 'wind_vector')
   'set gxout vector'
   'set ccolor 1'
   'set arrscl 0.5 10'
-*  'd skip(UGRD10m,20,20);VGRD10m'
   'd skip(UGRD10m,'vint','vint');VGRD10m'
   return
 endif
