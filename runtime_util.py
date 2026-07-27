@@ -1,6 +1,7 @@
 #for setting config information
 import os
 from pathlib import Path
+from datetime import date
 
 def get_date(name: str) -> date:
     value = os.environ.get(name)
