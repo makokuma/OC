@@ -2,17 +2,36 @@
 import os
 from pathlib import Path
 
-def get_daterange():
-    value1 = os.environ.get("OC_DATE_MIN")
-    value2 = os.environ.get("OC_DATE_MAX")
-    value3 = os.environ.get("OC_DATE_DEFAULT")
+def get_date(name: str) -> date:
+    value = os.environ.get(name)
 
-    return value1, value2, value3
+    if not value:
+        raise RuntimeError(
+            f"{name} is not set. "
+            "Check ~/.config/oc/server.conf."
+        )
 
-def parse_date(value):
-    YY = value[0:4]
-    MM = value[5:7]
-    DD = value[8:10]
+    try:
+        return date.fromisoformat(value)
+    except ValueError as exc:
+        raise RuntimeError(
+            f"{name} must be YYYY-MM-DD: {value!r}"
+        ) from exc
 
-    return YY, MM, DD
+def get_daterange() -> tuple[date, date, date]:
+    date_min = get_date("OC_DATE_MIN")
+    date_max = get_date("OC_DATE_MAX")
+    date_default = get_date("OC_DATE_DEFAULT")
 
+    if date_min > date_max:
+        raise RuntimeError(
+            "OC_DATE_MIN must not be later than OC_DATE_MAX."
+        )
+
+    if not date_min <= date_default <= date_max:
+        raise RuntimeError(
+            "OC_DATE_DEFAULT must be between "
+            "OC_DATE_MIN and OC_DATE_MAX."
+        )
+
+    return date_min, date_max, date_default
