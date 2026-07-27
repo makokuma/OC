@@ -26,9 +26,10 @@ lon2    = subwrd(args, 9)
 colorgs    = subwrd(args, 10)
 outpng  = subwrd(args, 11)
 
-LABNMAX = 6
-LABNMIN = 3
+MAXNDIV = 6
+MINNDIV = 3
 
+NUMGINT = 9
 GOODINT.1 = 5
 GOODINT.2 = 4
 GOODINT.3 = 2.5
@@ -42,11 +43,11 @@ GOODINT.9 = 0.1
 i = 0
 latRange = lat2 - lat1
 yint = 5
-while (i < 10)
+while (i < NUMGINT)
   i = i + 1
   nl = latRange / GOODINT.i
-  if (nl <= LABNMAX)
-    if (nl >= LABNMIN)
+  if (nl <= MAXNDIV*1.001)
+    if (nl >= MINNDIV*0.999)
       yint = GOODINT.i
       break
     endif
@@ -56,11 +57,11 @@ endwhile
 i = 0
 lonRange = lon2 - lon1
 xint = 5
-while (i < 10)
+while (i < NUMGINT)
   i = i + 1
   nl = lonRange / GOODINT.i
-  if (nl <= LABNMAX)
-    if (nl >= LABNMIN)
+  if (nl <= MAXNDIV*1.001)
+    if (nl >= MINNDIV*0.999)
       xint = GOODINT.i
       break
     endif
