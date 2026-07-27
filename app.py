@@ -137,23 +137,12 @@ with tab_free:
     st.write("任意の日付、要素を選択してください")
 
     #datedef
-    date = get_daterange()
-    YY_min = parse_date(date[0])[0]
-    MM_min = parse_date(date[0])[1]
-    DD_min = parse_date(date[0])[2]
-
-    YY_max = parse_date(date[1])[0]
-    MM_max = parse_date(date[1])[1]
-    DD_max = parse_date(date[1])[2]
-
-    YY_def = parse_date(date[2])[0]
-    MM_def = parse_date(date[2])[1]
-    DD_def = parse_date(date[2])[2]
+    date_min, date_max, date_default = get_daterange()
 
         "日付",
-        value=date(YY_def, MM_def, DD_def),
-        min_value=date(YY_min, MM_min, DD_min),
-        max_value=date(YY_max, MM_max, DD_max),
+        value=date_default,
+        min_value=date_min,
+        max_value=date_max,
         key="free_date",
     )
 
