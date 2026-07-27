@@ -5,10 +5,10 @@ args = args' 12Z29JUN2020'
 args = args' prs'
 args = args' pressfc'
 args = args' shaded'
-args = args' 30'
-args = args' 40'
-args = args' 135'
-args = args' 140'
+args = args' 34'
+args = args' 36'
+args = args' 122'
+args = args' 126'
 args = args' color_bar.gs'
 args = args' test.png'
 args = args' wind_vector'
@@ -26,6 +26,50 @@ lon2    = subwrd(args, 9)
 colorgs    = subwrd(args, 10)
 outpng  = subwrd(args, 11)
 
+LABNMAX = 6
+LABNMIN = 3
+
+GOODINT.1 = 5
+GOODINT.2 = 4
+GOODINT.3 = 2.5
+GOODINT.4 = 2
+GOODINT.5 = 1
+GOODINT.6 = 0.5
+GOODINT.7 = 0.25
+GOODINT.8 = 0.2
+GOODINT.9 = 0.1
+
+i = 0
+latRange = lat2 - lat1
+yint = 5
+while (i < 10)
+  i = i + 1
+  nl = latRange / GOODINT.i
+  if (nl <= LABNMAX)
+    if (nl >= LABNMIN)
+      yint = GOODINT.i
+      break
+    endif
+  endif
+endwhile
+
+i = 0
+lonRange = lon2 - lon1
+xint = 5
+while (i < 10)
+  i = i + 1
+  nl = lonRange / GOODINT.i
+  if (nl <= LABNMAX)
+    if (nl >= LABNMIN)
+      xint = GOODINT.i
+      break
+    endif
+  endif
+endwhile
+
+say 'XINT='xint
+say 'YINT='yint
+
 
 'reinit'
 'c'
@@ -35,6 +79,8 @@ outpng  = subwrd(args, 11)
 'set grid off'
 'set xlopts 1 3 0.14'
 'set ylopts 1 3 0.14'
+'set xlint 'xint
+'set ylint 'yint
 
 'set parea 0.8 10.2 0.8 7.6'
 
