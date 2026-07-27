@@ -12,7 +12,7 @@ if (overlay = 'slp_contour')
   'set clab on'
   'set cint 4'
   'd PRMSLmsl/100'
-  say 'slp_contour'
+*  say 'slp_contour'
   return
 endif
 
