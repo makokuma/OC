@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 from datetime import date
 
+
 def get_date(name: str) -> date:
     value = os.environ.get(name)
 
@@ -19,7 +20,7 @@ def get_date(name: str) -> date:
             f"{name} must be YYYY-MM-DD: {value!r}"
         ) from exc
 
-def get_daterange() -> tuple[date, date, date]:
+def get_daterange():
     date_min = get_date("OC_DATE_MIN")
     date_max = get_date("OC_DATE_MAX")
     date_default = get_date("OC_DATE_DEFAULT")
