@@ -4,6 +4,8 @@ function main(args)
 
 overlay = subwrd(args, 1)
 MAXDEGREE = 30
+INTNMIN = 4
+
 
 if (overlay = 'slp_contour')
   'set gxout contour'
@@ -12,7 +14,7 @@ if (overlay = 'slp_contour')
   'set clab on'
   'set cint 4'
   'd PRMSLmsl/100'
-  say 'slp_contour'
+*  say 'slp_contour'
   return
 endif
 
@@ -31,9 +33,9 @@ if (overlay = 'wind_vector')
   else
     widerRange = yrange
   endif
-  vint = math_nint(20 * widerRange / MAXDEGREE)
-  if (vint < 1)
-    vint = 1
+  vint = math_nint(25 * widerRange / MAXDEGREE)
+  if (vint < INTNMIN)
+    vint = INTNMIN
   endif
 *  vint = MAXDEGREE
 *  say 'wind_vector'
