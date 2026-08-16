@@ -15,7 +15,7 @@ def get_data_root() -> Path:
 
 
 def get_ctl_path(yyyy: int, mm: int, ctrl_grp: str) -> Path:
-    data_year = yyyy if mm in {7, 8, 9, 10} else yyyy - 1
+    data_year = yyyy if mm in {7, 8, 9, 10, 11, 12} else yyyy - 1
 
     return (
         get_data_root()
