@@ -11,6 +11,8 @@ from path_util import get_ctl_path
 from config import PLOT_CONFIG, EVENT_CONFIG, REGION_CONFIG, OVERLAY_CONFIG
 from grads_runner import run_grads
 from runtime_util import get_daterange
+import config_grads
+import config_python
 
 APP_DIR = Path(__file__).resolve().parent
 GS_DIR = APP_DIR / "gs"
