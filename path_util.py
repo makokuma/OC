@@ -22,3 +22,12 @@ def get_ctl_path(yyyy: int, mm: int, ctrl_grp: str) -> Path:
         / str(data_year)
         / f"{ctrl_grp}_LL.ctl"
     )
+
+def get_grib_path(yyyy: int, mm: int, dd:int, hh:int ctrl_grp: str) -> Path:
+    data_year = yyyy if mm in {7, 8, 9, 10, 11, 12} else yyyy - 1
+
+    return (
+        get_data_root()
+        / str(data_year)
+        / ctrl
+        / f"{ctrl_grp}_{yyyy}{mm}{dd}{hh}00.grib2"
