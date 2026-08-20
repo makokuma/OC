@@ -10,6 +10,7 @@ from time_util import grads_time, grads_time_from_jst
 from path_util import get_ctl_path
 from config import PLOT_CONFIG, EVENT_CONFIG, REGION_CONFIG, OVERLAY_CONFIG
 from grads_runner import run_grads
+from runtime_util import get_daterange
 
 APP_DIR = Path(__file__).resolve().parent
 GS_DIR = APP_DIR / "gs"
@@ -135,11 +136,14 @@ tab_free, tab_event = st.tabs(["自由に選ぶ", "おすすめの日"])
 with tab_free:
     st.write("任意の日付、要素を選択してください")
 
+    #datedef
+    date_min, date_max, date_default = get_daterange()
+
     selected_date = st.date_input(
         "日付",
-        value=date(2020, 7, 4),
-        min_value=date(2001, 1, 1),
-        max_value=date(2022, 12, 31),
+        value=date_default,
+        min_value=date_min,
+        max_value=date_max,
         key="free_date",
     )
 
