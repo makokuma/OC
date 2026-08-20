@@ -7,7 +7,7 @@ from datetime import date
 
 
 from time_util import grads_time, grads_time_from_jst
-from path_util import get_ctl_path
+from path_util import get_ctl_path, get_dset_from_ctl, resolve_dset_path
 from config import PLOT_CONFIG, EVENT_CONFIG, REGION_CONFIG, OVERLAY_CONFIG
 from grads_runner import run_grads
 from runtime_util import get_daterange
@@ -163,12 +163,71 @@ with tab_free:
     plot_key = plot_labels[plot_label]
     plot_config = PLOT_CONFIG[plot_key]
 
+    CUSTOM_REGION = "手動指定"
+
     region_label = st.selectbox(
         "表示領域",
-        list(region_labels.keys()),
+        list(region_labels.keys()) + [CUSTOM_REGION],
         key="free_region",
     )
-    region_config = REGION_CONFIG[region_labels[region_label]]
+
+    if region_label == CUSTOM_REGION:
+        col1, col2 = st.columns(2)
+
+        with col1:
+            lat_min = st.number_input(
+                "南端緯度",
+                value=20.0,
+                step=0.1,
+                format="%.1f",
+                key="free_lat_min",
+            )
+            lon_min = st.number_input(
+                "西端経度",
+                value=120.0,
+                step=0.1,
+                format="%.1f",
+                key="free_lon_min",
+            )
+
+        with col2:
+            lat_max = st.number_input(
+                "北端緯度",
+                value=50.0,
+                step=0.1,
+                format="%.1f",
+                key="free_lat_max",
+            )
+            lon_max = st.number_input(
+                "東端経度",
+                value=150.0,
+                step=0.1,
+                format="%.1f",
+                key="free_lon_max",
+            )
+
+        if lat_min >= lat_max:
+            st.error("南端緯度は北端緯度より小さくしてください。")
+            st.stop()
+
+        if lon_min >= lon_max:
+            st.error("西端経度は東端経度より小さくしてください。")
+            st.stop()
+
+        lat_range = (lat_min, lat_max)
+        lon_range = (lon_min, lon_max)
+
+    else:
+        region_config = REGION_CONFIG[region_labels[region_label]]
+        lat_range = region_config["lat_range"]
+        lon_range = region_config["lon_range"]
+
+#    region_label = st.selectbox(
+#        "表示領域",
+#        list(region_labels.keys()),
+#        key="free_region",
+#    )
+#    region_config = REGION_CONFIG[region_labels[region_label]]
 
     selected_overlay_labels = st.multiselect(
         "重ね書き",
@@ -181,7 +240,7 @@ with tab_free:
     #do not add tub below
     draw(
         selected_date, hour, plot_key, plot_label,
-        region_config["lat_range"], region_config["lon_range"],
+        lat_range, lon_range,
         overlays,
         key_prefix="free",
     )
