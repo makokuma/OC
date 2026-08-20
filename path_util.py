@@ -22,3 +22,29 @@ def get_ctl_path(yyyy: int, mm: int, ctrl_grp: str) -> Path:
         / str(data_year)
         / f"{ctrl_grp}_LL.ctl"
     )
+
+def get_dset_from_ctl(ctl_path: Path) -> str:
+    with ctl_path.open() as f:
+        for line in f:
+            line = line.strip()
+
+            if line.lower().startswith("dset "):
+                return line.split(maxsplit=1)[1]
+
+    raise ValueError(f"dset not found: {ctl_path}")
+
+
+def resolve_dset_path(ctl_path: Path) -> Path:
+    dset = get_dset_from_ctl(ctl_path)
+
+    # CTL基準の相対パス
+    if dset.startswith("^"):
+        return ctl_path.parent / dset[1:]
+
+    path = Path(dset)
+
+    # 絶対パス
+    if path.is_absolute():
+        return path
+
+    raise ValueError(f"Unsupported relative dset: {dset}")
